@@ -27,8 +27,7 @@ namespace SSGameJiaMiTool
 
         private void CreateMiYaoBt_Click(object sender, EventArgs e)
         {
-            string keyValue = ReadFromFileXml(GameJiaoYanKeyFile, "keyValue"); //GameJiaoYanKey.db文件中的数据.
-            //string jiaoYanValue = ReadFromFileXml(GameJiaoYanValueFile, "jiaoYanValue"); //GameJiaoYanValue.db文件中的数据.
+            string keyValue = ReadFromFileXml(GameJiaoYanKeyFile, "value"); //GameKey.db文件中的数据.
             if (keyValue == "")
             {
                 //没有读到有效数据信息.
@@ -36,24 +35,57 @@ namespace SSGameJiaMiTool
             }
             else
             {
-                //用Md5算法对数据进行加密.
-                string jiaoYanValue = Md5Encrypt(keyValue);
-                if (jiaoYanValue != "")
+                string jieMiKeyValue = Md5Decrypt(keyValue);
+                string[] jieMiKyValArray = null;
+                bool isMiYaoJieXiFailed = false;
+                if (jieMiKeyValue != "")
                 {
-                    //保存加密后的数据到文件中.
-                    WriteToFileXml(GameJiaoYanValueFile, "jiaoYanValue", jiaoYanValue);
-                    MessageBox.Show("秘钥产生成功,请查收\"" + GameJiaoYanValueFile + "\"文件!", "提示");
+                    jieMiKyValArray = jieMiKeyValue.Split('#');
+                    if (jieMiKyValArray.Length < 3)
+                    {
+                        isMiYaoJieXiFailed = true;
+                    }
+                    else
+                    {
+                        //秘钥解析成功.
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("秘钥产生失败,请检查\"" + GameJiaoYanKeyFile + "\"文件是否正确!", "警告");
+                    isMiYaoJieXiFailed = true;
+                }
+
+                if (isMiYaoJieXiFailed == true)
+                {
+                    //秘钥解析失败.
+                    MessageBox.Show("秘钥数据解析失败,请检查\"" + GameJiaoYanKeyFile + "\"文件是否正确!", "警告");
+                }
+                else
+                {
+                    //秘钥解析成功.
+                    //用Md5算法对数据进行加密.
+                    string jiaoYanValue = Md5Encrypt(keyValue);
+                    if (jiaoYanValue != "")
+                    {
+                        //保存加密后的数据到文件中.
+                        WriteToFileXml(GameJiaoYanValueFile, "value", jiaoYanValue); //GameValue.db文件中的数据.
+                        string msg = "秘钥产生成功,请查收\"" + GameJiaoYanValueFile + "\"文件!"
+                            + "\nMac == " + jieMiKyValArray[0]            //电脑网卡地址.
+                            + "\nTime == " + jieMiKyValArray[1]           //秘钥创建时间.
+                            + "\nGameName == " + jieMiKyValArray[2];      //游戏名称.
+                        MessageBox.Show(msg, "提示");
+                    }
+                    else
+                    {
+                        MessageBox.Show("秘钥产生失败,请检查\"" + GameJiaoYanKeyFile + "\"文件是否正确!", "警告");
+                    }
                 }
             }
         }
 
         #region 读写数据功能
-        string GameJiaoYanKeyFile = "GameJiaoYanKey.db";
-        string GameJiaoYanValueFile = "GameJiaoYanValue.db";
+        string GameJiaoYanKeyFile = "GameKey.db";
+        string GameJiaoYanValueFile = "GameValue.db";
         public string ReadFromFileXml(string fileName, string attribute)
         {
             string filepath = fileName;
