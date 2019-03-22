@@ -6,3 +6,12 @@ E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\SSGameJiaMiTool\obj\Re
 E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.csproj.GenerateResource.Cache
 E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.exe
 E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.pdb
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\bin\Release\SSGameJiaMiTool.exe.config
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\bin\Release\SSGameJiaMiTool.exe
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\bin\Release\SSGameJiaMiTool.pdb
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.SSGameJiaMiTool.resources
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.Properties.Resources.resources
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.csproj.GenerateResource.Cache
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.exe
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.pdb
+E:\syqWork\work_LeiTingZhanChe_HDL_WXPad_HDD_Win_U3d4.6.3\LeiTingZhanChe(sirentongping)\SSGameJiaMiTool\obj\Release\SSGameJiaMiTool.csprojResolveAssemblyReference.cache
