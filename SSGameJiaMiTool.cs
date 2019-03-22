@@ -67,12 +67,18 @@ namespace SSGameJiaMiTool
                     string jiaoYanValue = Md5Encrypt(keyValue);
                     if (jiaoYanValue != "")
                     {
+                        string fileName = jieMiKyValArray[2] + ".db";
+                        string mac = jieMiKyValArray[0];
+                        string time = jieMiKyValArray[1];
+                        string gameName = jieMiKyValArray[2];
+                        int recordGameCount = WriteGameInfoToFileXml(fileName, mac, time, gameName);
                         //保存加密后的数据到文件中.
                         WriteToFileXml(GameJiaoYanValueFile, "value", jiaoYanValue); //GameValue.db文件中的数据.
                         string msg = "秘钥产生成功,请查收\"" + GameJiaoYanValueFile + "\"文件!"
-                            + "\nMac == " + jieMiKyValArray[0]            //电脑网卡地址.
-                            + "\nTime == " + jieMiKyValArray[1]           //秘钥创建时间.
-                            + "\nGameName == " + jieMiKyValArray[2];      //游戏名称.
+                            + "\nMac == " + mac                //电脑网卡地址.
+                            + "\nTime == " + time              //秘钥创建时间.
+                            + "\nGameName == " + gameName     //游戏名称.
+                            + "\nrecordGameCount == " + recordGameCount; //已经注册的游戏数量.
                         MessageBox.Show(msg, "提示");
                     }
                     else
@@ -145,6 +151,89 @@ namespace SSGameJiaMiTool
                 File.SetAttributes(filepath, FileAttributes.Normal);
                 xmlDoc.Save(filepath);
             }
+        }
+        
+        public int WriteGameInfoToFileXml(string fileName, string mac, string time, string gameName)
+        {
+            int recordGameCount = 0; //已经注册的游戏数目.
+            string filepath = fileName;
+            string attMac = "Mac";
+            string attTime = "Time";
+            string attGameName = "GameName";
+            string attGameCount = "GameCount";
+            string eleConfig = "config";
+            string eleGameInfo = "gameInfo";
+            //create file
+            if (!File.Exists(filepath))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                XmlElement root = xmlDoc.CreateElement("gameConfig");
+                XmlElement elmConfig = xmlDoc.CreateElement(eleConfig);
+                root.AppendChild(elmConfig);
+                //XmlElement elmNew = xmlDoc.CreateElement(eleGameInfo);
+                //root.AppendChild(elmNew);
+                xmlDoc.AppendChild(root);
+                xmlDoc.Save(filepath);
+                File.SetAttributes(filepath, FileAttributes.Normal);
+            }
+
+            //update value
+            if (File.Exists(filepath))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(filepath);
+                XmlNodeList nodeList = xmlDoc.SelectSingleNode("gameConfig").ChildNodes;
+                recordGameCount = nodeList.Count;
+                //是否需要新创建游戏配置信息.
+                bool isCreateNewGameInfo = true;
+                foreach (XmlElement xe in nodeList)
+                {
+                    //if (xe.Name == eleConfig)
+                    //{
+                    //    xe.SetAttribute(attGameName, gameName);
+                    //    xe.SetAttribute(attGameCount, recordGameCount.ToString());
+                    //}
+                    if (xe.Name == eleGameInfo)
+                    {
+                        string macInfo = xe.GetAttribute(attMac);
+                        if (macInfo == mac)
+                        {
+                            //游戏信息覆盖.
+                            recordGameCount = nodeList.Count - 1;
+                            xe.SetAttribute(attMac, mac);
+                            xe.SetAttribute(attTime, time);
+                            isCreateNewGameInfo = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isCreateNewGameInfo == true)
+                {
+                    //新建游戏信息.
+                    //XmlElement root = xmlDoc.GetElementById("gameConfig");
+                    XmlElement root = xmlDoc.DocumentElement;
+                    XmlElement elmNew = xmlDoc.CreateElement(eleGameInfo);
+                    elmNew.SetAttribute(attMac, mac);
+                    elmNew.SetAttribute(attTime, time);
+                    root.AppendChild(elmNew);
+                    xmlDoc.AppendChild(root);
+                }
+
+                foreach (XmlElement xe in nodeList)
+                {
+                    if (xe.Name == eleConfig)
+                    {
+                        //保存游戏注册的数量信息.
+                        xe.SetAttribute(attGameName, gameName);
+                        xe.SetAttribute(attGameCount, recordGameCount.ToString());
+                        break;
+                    }
+                }
+                File.SetAttributes(filepath, FileAttributes.Normal);
+                xmlDoc.Save(filepath);
+            }
+            return recordGameCount;
         }
         #endregion
 
